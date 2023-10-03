@@ -5,6 +5,9 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from ..EntryEdit import EntryEdit
+from PIL import Image
+from gtts import gTTS
+from pytesseract import image_to_string
 
 class EntryView(EntryViewTemplate):
   def __init__(self, **properties):
@@ -39,5 +42,27 @@ class EntryView(EntryViewTemplate):
     # (which is the entries_panel on Homepage)
     if confirm(f"Are you sure you want to delete {self.item['title']}?"):
       self.parent.raise_event('x-delete-entry', entry=self.item)
+
+  def image_to_sound(self, image_path):
+    try:
+      loaded_image = Image.open(image_path)
+      decoded_text = image_to_string(loaded_image)
+      cleaned_text = " ".join(decoded_text.split("\n"))
+      print(cleaned_text)
+      sound = gTTS(cleaned_text, lang="en")
+      sound.save("test.mp3")
+      return True
+    except:
+      alert("Error has occured")
+      return
+
+  if __name__== "__main__":
+    image_to_sound("image.png")
+    input()
+
+  def image_1_mouse_enter(self, x, y, **event_args):
+    """This method is called when the mouse cursor enters this component"""
+    self.image_to_sound()
+
 
 

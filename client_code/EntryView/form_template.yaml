@@ -61,6 +61,7 @@ components:
     layout_properties: {grid_position: 'MHWRRD,XGUAPS HJGZPT,YQCVDA'}
     data_bindings:
     - {property: source, code: 'self.item[''image'']'}
+    event_bindings: {mouse_enter: image_1_mouse_enter}
   - type: Label
     properties: {}
     name: content_label
